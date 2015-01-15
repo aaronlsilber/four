@@ -1,6 +1,6 @@
-var key1 = 0; /* TODO - change this to the value of key #1 */
-var key2 = 0; /* TODO - change this to the value of key #2 */
-var key3 = 0; /* TODO - change this to the value of key #3 */
+var key1 = 9; /* TODO - change this to the value of key #1 */
+var key2 = 3; /* TODO - change this to the value of key #2 */
+var key3 = 1; /* TODO - change this to the value of key #3 */
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -34,10 +34,34 @@ var key3 = 0; /* TODO - change this to the value of key #3 */
 ///////////////////////////////////////////////////////////////////////////////
 
 function decrypt(text) {
-  // TODO - decrypt the data in "text" using the 3 puzzle keys by following the
-  // instructions above. Don't forget to return the decrypted string at the end.
 
-  return "Not implemented yet.";
+  var result;
+  
+  function dechunk(text, key) {
+    result = '';
+    for (var i = key; i < text.length; i+=(key+1)) {
+      result += text[i];
+    };
+    return result;
+  }
+
+  function reduceChars(text, key) {
+    result = '';
+    for (var i = 0; i < text.length; i++) {
+      result += String.fromCharCode( text[i].charCodeAt(0) - key );
+    };
+    return result;
+  }
+
+  function xorMesh(text, key) {
+    result = '';
+    for (var i = 0; i < text.length; i++) {
+      result += String.fromCharCode( text[i].charCodeAt(0) ^ key );
+    };
+    return result;
+  }
+
+  return xorMesh(reduceChars(dechunk(text, key1), key2), key3);
 }
 
 function getEncryptedString() {
